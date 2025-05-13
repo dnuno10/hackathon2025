@@ -22,41 +22,72 @@ struct Insignia: Identifiable {
     let descripcion: String
 }
 
+struct InsigniaDetailView: View {
+    let insignia: Insignia
+
+    var body: some View {
+        VStack(spacing: 24) {
+            Spacer()
+            Text(insignia.emoji)
+                .font(.system(size: 120))
+            Text(insignia.titulo)
+                .font(.system(size: 32, weight: .bold))
+                .multilineTextAlignment(.center)
+            Text(insignia.descripcion)
+                .font(.system(size: 20))
+                .foregroundColor(.gray)
+                .multilineTextAlignment(.center)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
+    }
+}
+
 // Vista de perfil
 struct MyProfileView: View {
-    let nombreUsuario = "Alex González"
-    let rachaActual = 5 // En días
+    let nombreUsuario = "Axel Nuño"
+    let rachaActual = 96 // En días
 
     let amigos = [
-        Amigo(nombre: "María", imagen: "perfil_amigo1", racha: 7),
-        Amigo(nombre: "Carlos", imagen: "perfil_amigo2", racha: 3),
-        Amigo(nombre: "Ana", imagen: "perfil_amigo3", racha: 10)
+        Amigo(nombre: "Carlos", imagen: "imgFriend1", racha: 7),
+        Amigo(nombre: "Ana", imagen: "imgFriend2", racha: 10),
+        Amigo(nombre: "Pepe", imagen: "imgFriend3", racha: 3),
+        Amigo(nombre: "María", imagen: "imgFriend4", racha: 32)
     ]
 
     let insignias = [
         Insignia(emoji: "🔥", titulo: "Racha encendida", descripcion: "Llevas más de 3 días escaneando."),
         Insignia(emoji: "🌱", titulo: "Eco Explorer", descripcion: "Escaneaste tu primer producto ecológico."),
-        Insignia(emoji: "🏆", titulo: "Primer logro", descripcion: "Registraste tu primer producto.")
+        Insignia(emoji: "🏆", titulo: "Primer logro", descripcion: "Registraste tu primer producto."),
+        Insignia(emoji: "🍎", titulo: "Nutri Ninja", descripcion: "Escaneaste 10 productos saludables."),
+        Insignia(emoji: "📦", titulo: "Empaque Experto", descripcion: "Identificaste 5 productos con empaque reciclable."),
+        Insignia(emoji: "💧", titulo: "Hidratado", descripcion: "Escaneaste 3 bebidas saludables."),
+        Insignia(emoji: "🌍", titulo: "Amigo del Planeta", descripcion: "Escaneaste 10 productos ecológicos."),
+        Insignia(emoji: "⚡", titulo: "Velocidad Máxima", descripcion: "Escaneaste 5 productos en menos de un minuto."),
+        Insignia(emoji: "🎯", titulo: "Objetivo Cumplido", descripcion: "Completaste tu primera meta semanal."),
     ]
+
+    @State private var insigniaSeleccionada: Insignia? = nil
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
 
                 // Encabezado con perfil y racha
-                HStack(alignment: .center, spacing: 16) {
-                    Image("perfil_usuario")
+                HStack(alignment: .center, spacing: 36) {
+                    Image("imgUser")
                         .resizable()
-                        .frame(width: 70, height: 70)
+                        .frame(width: 120, height: 120) // Increased size
                         .clipShape(Circle())
-                        .overlay(Circle().stroke(Color.gray.opacity(0.4), lineWidth: 1))
+                        .overlay(Circle().stroke(Color.gray.opacity(0.4), lineWidth: 2)) // Slightly thicker border
 
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 8) { // Increased spacing
                         Text(nombreUsuario)
-                            .font(.title2)
+                            .font(.title) // Larger font
                             .bold()
-                        Text("🔥 Racha actual: \(rachaActual) días")
-                            .font(.subheadline)
+                        Text("🔥 \(rachaActual)")
+                            .font(.title3) // Larger font
                             .foregroundColor(.orange)
                     }
                     Spacer()
@@ -64,7 +95,7 @@ struct MyProfileView: View {
                 .padding(.horizontal)
 
                 // Rachas de amigos
-                Text("Rachas de amigos")
+                Text("Tus Rachas 🔥")
                     .font(.headline)
                     .padding(.horizontal)
 
@@ -79,7 +110,7 @@ struct MyProfileView: View {
                                 Text(amigo.nombre)
                                     .font(.caption)
                                     .bold()
-                                Text("\(amigo.racha) días")
+                                Text("🔥 \(amigo.racha)")
                                     .font(.caption2)
                                     .foregroundColor(.orange)
                             }
@@ -91,37 +122,39 @@ struct MyProfileView: View {
                     .padding(.horizontal)
                 }
 
-                // Insignias del usuario
-                Text("Insignias obtenidas")
+                Text("Tus Insignias 🎖️")
                     .font(.headline)
                     .padding(.horizontal)
 
-                VStack(spacing: 12) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80), spacing: 16)], spacing: 16) {
                     ForEach(insignias) { insignia in
-                        HStack(alignment: .center, spacing: 12) {
-                            Text(insignia.emoji)
-                                .font(.largeTitle)
-
-                            VStack(alignment: .leading) {
+                        Button(action: {
+                            insigniaSeleccionada = insignia
+                        }) {
+                            VStack {
+                                Text(insignia.emoji)
+                                    .font(.system(size: 36))
                                 Text(insignia.titulo)
-                                    .font(.subheadline)
-                                    .bold()
-                                Text(insignia.descripcion)
                                     .font(.caption)
-                                    .foregroundColor(.gray)
+                                    .bold()
+                                    .multilineTextAlignment(.center)
                             }
-                            Spacer()
+                            .padding(8)
+                            .background(Color.gray.opacity(0.1))
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
-                        .padding()
-                        .background(Color(UIColor.secondarySystemBackground))
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .buttonStyle(PlainButtonStyle())
                     }
-                }
+                }   
                 .padding(.horizontal)
             }
             .padding(.vertical)
         }
         .navigationTitle("Mi Perfil")
+        .sheet(item: $insigniaSeleccionada) { insignia in
+            InsigniaDetailView(insignia: insignia)
+                .presentationDetents([.fraction(0.75)])
+                .id(insignia.id) // Identificar cada modal por su insignia
+        }
     }
 }
-// Vista previa para desarrollo
