@@ -57,7 +57,7 @@ struct MyProfileView: View {
     ]
 
     let insignias = [
-        Insignia(emoji: "🔥", titulo: "Racha encendida", descripcion: "Llevas más de 3 días escaneando."),
+        Insignia(emoji: "🛒", titulo: "Comprador Consciente", descripcion: "Escaneaste 20 productos en una sola sesión."),
         Insignia(emoji: "🌱", titulo: "Eco Explorer", descripcion: "Escaneaste tu primer producto ecológico."),
         Insignia(emoji: "🏆", titulo: "Primer logro", descripcion: "Registraste tu primer producto."),
         Insignia(emoji: "🍎", titulo: "Nutri Ninja", descripcion: "Escaneaste 10 productos saludables."),
@@ -69,26 +69,66 @@ struct MyProfileView: View {
     ]
 
     @State private var insigniaSeleccionada: Insignia? = nil
+    @State private var experiencia: Double = 0.0
+    let nivel = 33
+    let experienciaActual = 88.0
+    let experienciaMaxima = 100.0
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
 
-                // Encabezado con perfil y racha
-                HStack(alignment: .center, spacing: 36) {
+                // NUEVA SECCIÓN DE NIVEL Y RACHA
+                HStack(alignment: .center, spacing: 24) {
                     Image("imgUser")
                         .resizable()
-                        .frame(width: 120, height: 120) // Increased size
+                        .frame(width: 120, height: 120)
                         .clipShape(Circle())
-                        .overlay(Circle().stroke(Color.gray.opacity(0.4), lineWidth: 2)) // Slightly thicker border
+                        .overlay(Circle().stroke(Color.gray.opacity(0.4), lineWidth: 2))
 
-                    VStack(alignment: .leading, spacing: 8) { // Increased spacing
+                    VStack(alignment: .leading, spacing: 8) {
                         Text(nombreUsuario)
-                            .font(.title) // Larger font
+                            .font(.title)
                             .bold()
-                        Text("🔥 \(rachaActual)")
-                            .font(.title3) // Larger font
-                            .foregroundColor(.orange)
+                        HStack(spacing: 24) {
+                            VStack(alignment: .center) {
+                                Text("\(nivel)")
+                                    .font(.system(size: 32, weight: .bold))
+                                    .foregroundColor(.green)
+                                Text("Nivel")
+                                    .font(.caption)
+                                    .foregroundColor(.green)
+                            }
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("🔥 \(rachaActual)")
+                                    .font(.system(size: 24, weight: .bold))
+                                    .foregroundColor(.orange)
+                                Text("Racha actual")
+                                    .font(.caption)
+                                    .foregroundColor(.orange)
+                            }
+                        }
+                        // Barra de experiencia debajo de nivel y racha
+                        VStack(alignment: .leading, spacing: 4) {
+                            ZStack(alignment: .leading) {
+                                Capsule()
+                                    .frame(height: 12)
+                                    .foregroundColor(Color.green.opacity(0.2))
+                                Capsule()
+                                    .frame(width: CGFloat(experiencia/experienciaMaxima) * 140, height: 12)
+                                    .foregroundColor(.green)
+                                    .animation(.easeOut(duration: 1.2), value: experiencia)
+                            }
+                            Text("\(Int(experiencia))/\(Int(experienciaMaxima)) XP")
+                                .font(.caption2)
+                                .foregroundColor(.green)
+                        }
+                        .padding(.top, 4)
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                experiencia = experienciaActual
+                            }
+                        }
                     }
                     Spacer()
                 }
