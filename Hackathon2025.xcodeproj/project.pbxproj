@@ -29,9 +29,33 @@
 		F334645E2DD30F77005B0AF4 /* Hackathon2025UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Hackathon2025UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		F3E11A052DD3E527009A1B9E /* Exceptions for "Hackathon2025" folder in "Hackathon2025" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				.swift,
+			);
+			target = F33464432DD30F76005B0AF4 /* Hackathon2025 */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		F3E11A062DD3E527009A1B9E /* Exceptions for "Hackathon2025" folder in "Compile Sources" phase from "Hackathon2025" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = F33464402DD30F76005B0AF4 /* Sources */;
+			membershipExceptions = (
+				.swift,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		F33464462DD30F76005B0AF4 /* Hackathon2025 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F3E11A052DD3E527009A1B9E /* Exceptions for "Hackathon2025" folder in "Hackathon2025" target */,
+				F3E11A062DD3E527009A1B9E /* Exceptions for "Hackathon2025" folder in "Compile Sources" phase from "Hackathon2025" target */,
+			);
 			path = Hackathon2025;
 			sourceTree = "<group>";
 		};
