@@ -241,20 +241,21 @@ struct CameraView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack(spacing: 16) {
-                        Button(action: {
-                        }) {
+                        NavigationLink(destination: HistorialView(productosEscaneados: [])) {
                             Image(systemName: "chart.bar.fill")
                                 .foregroundColor(.white)
                         }
-                        
-                        Button(action: {
-                        }) {
+
+                        NavigationLink(destination: MyProfileView()) {
                             Image(systemName: "person.circle.fill")
                                 .foregroundColor(.white)
                         }
                     }
                 }
             }
+
+            
+            
 
             .alert(isPresented: $vm.showError) {
                 Alert(
