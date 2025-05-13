@@ -191,8 +191,9 @@ struct CameraView: View {
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .padding(.horizontal)
+                                .padding(.vertical)
                                 .background(Color.black.opacity(0.6))
-                                .cornerRadius(8)
+                                .cornerRadius(16)
                         }
                         .padding(.bottom, 120)
                     }
@@ -233,10 +234,25 @@ struct CameraView: View {
 
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .principal) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Text("Captura Producto")
                         .foregroundColor(.white)
                         .font(.headline)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    HStack(spacing: 16) {
+                        Button(action: {
+                        }) {
+                            Image(systemName: "chart.bar.fill")
+                                .foregroundColor(.white)
+                        }
+                        
+                        Button(action: {
+                        }) {
+                            Image(systemName: "person.circle.fill")
+                                .foregroundColor(.white)
+                        }
+                    }
                 }
             }
 
