@@ -15,36 +15,40 @@ struct Producto: Identifiable {
     var escaneado: Bool
 }
 
-// Vista de historial estilo Pokédex
 struct HistorialView: View {
-    // Aquí recibimos los nombres de productos escaneados desde la vista principal
     let productosEscaneados: [String]
 
-    // Simulamos un catálogo completo de productos posibles
+    @State private var productoSeleccionado: Producto? = nil
+    @State private var mostrarAlerta = false
+    @State private var mensajeAlerta = ""
+
     let todosLosProductos: [Producto] = [
-        Producto(nombre: "Pan Integral", imagen: "diamond", escaneado: false),
-        Producto(nombre: "Donas Bimbo", imagen: "diamond", escaneado: false),
-        Producto(nombre: "Pan Blanco", imagen: "diamond", escaneado: false),
-        Producto(nombre: "Pan Tostado", imagen: "diamond", escaneado: false)
+        Producto(nombre: "Gansito", imagen: "gansito", escaneado: true),
+        Producto(nombre: "Barritas Fresa", imagen: "barritasfresa", escaneado: false),
+        Producto(nombre: "Canelitas", imagen: "canelitas", escaneado: false),
+        Producto(nombre: "Donas Bimbo", imagen: "donasbimbo", escaneado: false),
+        Producto(nombre: "Mantecadas", imagen: "mantecadas", escaneado: true),
+        Producto(nombre: "Nito", imagen: "nito", escaneado: false),
+        Producto(nombre: "Pan Bimbo", imagen: "panbimbo", escaneado: false),
+        Producto(nombre: "Takis", imagen: "takis", escaneado: false),
+        Producto(nombre: "Rebanadas Bimbo", imagen: "rebanadasbimbo", escaneado: false),
+        Producto(nombre: "Tortillinas", imagen: "tortillinas", escaneado: false)
     ]
 
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
-                // Vamos creando una versión actualizada de cada producto según si fue escaneado o no
                 ForEach(todosLosProductos.map { producto in
                     Producto(
                         nombre: producto.nombre,
                         imagen: producto.imagen,
-                        escaneado: productosEscaneados.contains(producto.nombre)
+                        escaneado: producto.escaneado || productosEscaneados.contains(producto.nombre)
                     )
                 }) { producto in
                     VStack {
-                        if producto.escaneado {
-                            // Si fue escaneado, mostramos imagen normal y habilitamos clic
+                        if (producto.escaneado) {
                             Button(action: {
-                                // Aquí luego podemos conectar con otra vista
-                                print("Viendo detalle de \(producto.nombre)")
+                                productoSeleccionado = producto
                             }) {
                                 Image(producto.imagen)
                                     .resizable()
@@ -52,33 +56,48 @@ struct HistorialView: View {
                                     .frame(height: 120)
                             }
                         } else {
-                            // Si no ha sido escaneado, mostramos imagen en grises
                             Image(producto.imagen)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(height: 120)
                                 .grayscale(1.0)
                                 .opacity(0.4)
+                                .onTapGesture {
+                                    mensajeAlerta = "¡Aún no has escaneado este producto! Sigue registrando tus compras para descubrir más información"
+                                    mostrarAlerta = true
+                                }
                         }
-
-                        // Mostramos el nombre con color según estado
                         Text(producto.nombre)
                             .font(.caption)
                             .foregroundColor(producto.escaneado ? .primary : .gray)
                     }
-                    .padding()
                 }
             }
             .padding()
         }
         .navigationTitle("Historial")
+        .sheet(item: $productoSeleccionado) { producto in
+            if let productType = ProductType.fromNombre(producto.nombre) {
+                BimboSustainabilityMetricsView(product: productType)
+                    .presentationDetents([.fraction(1)])
+            } else {
+                Text("No hay información de sostenibilidad para este producto.")
+                    .padding()
+            }
+        }
+        .alert(isPresented: $mostrarAlerta) {
+            Alert(
+                title: Text("¡Sigue explorando! 🚀"),
+                message: Text(mensajeAlerta),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
 }
 
-// Ejemplo de vista previa para desarrollo
-struct HistorialView_Previews: PreviewProvider {
-    static var previews: some View {
-        // Probamos simulando que solo se ha escaneado "Pan Integral"
-        HistorialView(productosEscaneados: ["Pan Integral"])
+// Asegúrate de que ProductType.fromNombre funcione así:
+extension ProductType {
+    static func fromNombre(_ nombre: String) -> ProductType? {
+        ProductType.allCases.first { $0.apiValue.lowercased() == nombre.lowercased() }
     }
 }
