@@ -31,15 +31,15 @@ struct CatalogoView: View {
         Producto(nombre: "Canelitas", imagen: "canelitas", categoria: "Galletas", empresa: "Gamesa", pais: "México"),
         Producto(nombre: "Pan Bimbo", imagen: "panbimbo", categoria: "Pan", empresa: "Bimbo", pais: "México"),
         Producto(nombre: "Barritas Fresa", imagen: "barritasfresa", categoria: "Pastelitos", empresa: "Marinela", pais: "México"),
-        Producto(nombre: "Donas Bimbo", imagen: "donasbimbo", categoria: "Bollería", empresa: "Bimbo", pais: "México"),
+        Producto(nombre: "Donas Bimbo", imagen: "donasbimbo", categoria: "Pan dulce", empresa: "Bimbo", pais: "México"),
         Producto(nombre: "Mantecadas", imagen: "mantecadas", categoria: "Pan dulce", empresa: "Bimbo", pais: "México"),
         Producto(nombre: "Nito", imagen: "nito", categoria: "Pastelitos", empresa: "Marinela", pais: "México"),
         Producto(nombre: "Takis", imagen: "takis", categoria: "Botanas saladas", empresa: "Barcel", pais: "México"),
         Producto(nombre: "Rebanadas Bimbo", imagen: "rebanadasbimbo", categoria: "Pan dulce", empresa: "Bimbo", pais: "México"),
-        Producto(nombre: "Tortillinas", imagen: "tortillinas", categoria: "Tortillas y flatbed", empresa: "Tía Rosa", pais: "México"),
+        Producto(nombre: "Tortillinas", imagen: "tortillinas", categoria: "Tortillas y flatbread", empresa: "Tía Rosa", pais: "México"),
         Producto(nombre: "Barritas Piña", imagen: "barritaspina", categoria: "Pastelitos", empresa: "Marinela", pais: "México"),
-        Producto(nombre: "Donas Bimbo USA", imagen: "donasUSA", categoria: "Bollería", empresa: "Bimbo", pais: "Estados Unidos"),
-        Producto(nombre: "Donut Española", imagen: "donutEsp", categoria: "Bollería", empresa: "Bimbo", pais: "España"),
+        Producto(nombre: "Donas Bimbo", imagen: "donasUSA", categoria: "Bollería", empresa: "Bimbo", pais: "Estados Unidos"),
+        Producto(nombre: "Donut Española", imagen: "donutEsp", categoria: "Pan dulce", empresa: "Bimbo", pais: "España"),
         Producto(nombre: "Fango", imagen: "fangoArg", categoria: "Pan dulce", empresa: "Bimbo", pais: "Argentina"),
         Producto(nombre: "Hot Dog Buns", imagen: "hotdog", categoria: "Pan", empresa: "Bimbo", pais: "Estados Unidos"),
         Producto(nombre: "Little Bites", imagen: "littlebitesUSA", categoria: "Pastelitos", empresa: "Entenmann’s", pais: "Estados Unidos"),
@@ -175,8 +175,8 @@ struct CatalogoView: View {
                 BimboSustainabilityMetricsView(product: productType)
                     .presentationDetents([.fraction(1)])
             } else {
-                Text("Información del producto disponible próximamente...")
-                    .padding()
+                CatalogoNoInfoView(producto: producto)
+                    .presentationDetents([.fraction(1)])
             }
         }
     }
@@ -204,5 +204,65 @@ struct FilterChip: View {
 extension ProductType {
     static func fromNombre(_ nombre: String) -> ProductType? {
         ProductType.allCases.first { $0.apiValue.lowercased() == nombre.lowercased() }
+    }
+}
+
+// Nueva vista para productos sin información
+struct CatalogoNoInfoView: View {
+    let producto: Producto
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 24) {
+                VStack(spacing: 20) {
+                    Image(producto.imagen)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 240)
+                        .padding(.top, 20)
+                    
+                    Text(producto.nombre)
+                        .font(.system(size: 32, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding(.bottom, 8)
+                    
+                    Text(producto.categoria)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(Color("1976D2"))
+                        )
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 24)
+                .background(
+                    LinearGradient(
+                        gradient: Gradient(colors: [
+                            Color.blue.opacity(0.2),
+                            Color.blue.opacity(0.8)
+                        ]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .clipShape(RoundedCorner(radius: 32, corners: [.bottomLeft, .bottomRight]))
+                )
+
+                InfoPanel(text: "No hay datos disponibles para este producto en este momento.")
+            }
+            .padding(.bottom, 24)
+        }
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [Color("F5F7FA"), Color("E4EAF6")]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+        )
+        .navigationTitle("Indicadores de Sustentabilidad")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
