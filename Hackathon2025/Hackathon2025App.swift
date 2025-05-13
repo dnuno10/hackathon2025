@@ -241,8 +241,8 @@ struct CameraView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack(spacing: 16) {
-                        NavigationLink(destination: HistorialView(productosEscaneados: [])) {
-                            Image(systemName: "chart.bar.fill")
+                        NavigationLink(destination: CatalogoView()) {
+                            Image(systemName: "info.circle.fill")
                                 .foregroundColor(.white)
                         }
 
