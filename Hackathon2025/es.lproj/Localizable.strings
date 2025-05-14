@@ -111,6 +111,7 @@
 "language" = "Español";
 
 "catalog_title" = "Catálogo BIMBO";
+"profile_personal_streak"="Mi racha";
 "catalog_search_placeholder" = "Buscar producto, empresa o país...";
 "catalog_filter_category" = "Categorías";
 "catalog_filter_company" = "Empresas";

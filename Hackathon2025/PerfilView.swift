@@ -1,6 +1,5 @@
 import SwiftUI
 
-// MARK: - Models
 
 struct Amigo: Identifiable {
     let id = UUID()
@@ -16,7 +15,6 @@ struct Insignia: Identifiable {
     let descripcionKey: String
 }
 
-// MARK: - Detail View
 
 struct InsigniaDetailView: View {
     let insignia: Insignia
@@ -41,7 +39,6 @@ struct InsigniaDetailView: View {
     }
 }
 
-// MARK: - Profile View
 
 struct MyProfileView: View {
     @ObservedObject private var localizer = LocalizationManager.shared
@@ -104,7 +101,7 @@ struct MyProfileView: View {
                                 Text("🔥 \(rachaActual)")
                                     .font(.system(size: 24, weight: .bold))
                                     .foregroundColor(.orange)
-                                Text(localizer.localizedString(forKey: "profile_friends_title"))
+                                Text(localizer.localizedString(forKey: "profile_personal_streak"))
                                     .font(.caption)
                                     .foregroundColor(.orange)
                             }
@@ -152,7 +149,6 @@ struct MyProfileView: View {
                 .padding(.horizontal)
 
 
-                // Sección de amigos
                 Text(localizer.localizedString(forKey: "profile_friends_title"))
                     .font(.headline)
                     .padding(.horizontal)
@@ -182,7 +178,6 @@ struct MyProfileView: View {
                     .padding(.horizontal)
                 }
 
-                // Sección de insignias
                 Text(localizer.localizedString(forKey: "profile_badges_title"))
                     .font(.headline)
                     .padding(.horizontal)

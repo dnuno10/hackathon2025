@@ -112,6 +112,7 @@
 "language" = "Français";
 
 "catalog_title" = "Catalogue BIMBO";
+"profile_personal_streak"="My streak";
 "catalog_search_placeholder" = "Rechercher un produit, une entreprise ou un pays...";
 "catalog_filter_category" = "Catégories";
 "catalog_filter_company" = "Entreprises";

@@ -1,7 +1,6 @@
 import Foundation
 import SwiftUI
 
-// MARK: - Data Models
 
 struct SustainabilityMetric: Identifiable {
     let id = UUID()
@@ -9,7 +8,6 @@ struct SustainabilityMetric: Identifiable {
     let numericValue: Double
     let category: Category
     let dailyEquivalent: String
-    let source: String
     
     var isPositiveIndicator: Bool {
         indicatorCode != .huellaCarbono

@@ -1,5 +1,5 @@
 //
-//  His.swift
+//  CatalogoView.swift
 //  Hackathon2025
 //
 //  Created by Daniel Nuno on 5/13/25.
@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// Modelo básico de producto
 struct Producto: Identifiable {
     let id = UUID()
     let nombre: String
@@ -26,7 +25,6 @@ struct CatalogoView: View {
     @State private var productoSeleccionado: Producto? = nil
     @ObservedObject private var localizer = LocalizationManager.shared
 
-    // Ejemplo de productos
     let productos: [Producto] = [
         Producto(nombre: "Gansito", imagen: "gansito", categoria: "Pastelitos", empresa: "Marinela", pais: "México"),
         Producto(nombre: "Canelitas", imagen: "canelitas", categoria: "Galletas", empresa: "Gamesa", pais: "México"),
@@ -39,12 +37,12 @@ struct CatalogoView: View {
         Producto(nombre: "Rebanadas Bimbo", imagen: "rebanadasbimbo", categoria: "Pan dulce", empresa: "Bimbo", pais: "México"),
         Producto(nombre: "Tortillinas", imagen: "tortillinas", categoria: "Tortillas y flatbread", empresa: "Tía Rosa", pais: "México"),
         Producto(nombre: "Barritas Piña", imagen: "barritaspina", categoria: "Pastelitos", empresa: "Marinela", pais: "México"),
-        Producto(nombre: "Donas Bimbo", imagen: "donasUSA", categoria: "Bollería", empresa: "Bimbo", pais: "Estados Unidos"),
+        Producto(nombre: "Donas Bimbo USA", imagen: "donasUSA", categoria: "Bollería", empresa: "Entenmann’s", pais: "Estados Unidos"),
         Producto(nombre: "Donut Española", imagen: "donutEsp", categoria: "Pan dulce", empresa: "Bimbo", pais: "España"),
         Producto(nombre: "Fango", imagen: "fangoArg", categoria: "Pan dulce", empresa: "Bimbo", pais: "Argentina"),
         Producto(nombre: "Hot Dog Buns", imagen: "hotdog", categoria: "Pan", empresa: "Bimbo", pais: "Estados Unidos"),
         Producto(nombre: "Little Bites", imagen: "littlebitesUSA", categoria: "Pastelitos", empresa: "Entenmann’s", pais: "Estados Unidos"),
-        Producto(nombre: "Milpa Real Tortillas", imagen: "milpareal", categoria: "Tortillas y flatbed", empresa: "Milpa Real", pais: "México"),
+        Producto(nombre: "Milpa Real Tortillas", imagen: "milpareal", categoria: "Tortillas y flatbread", empresa: "Milpa Real", pais: "México"),
         Producto(nombre: "Oatunt Muffins", imagen: "oatuntUSA", categoria: "Pan dulce", empresa: "Bimbo", pais: "Estados Unidos"),
         Producto(nombre: "Pingüinos", imagen: "pinguino", categoria: "Pastelitos", empresa: "Marinela", pais: "México"),
         Producto(nombre: "Runners", imagen: "runners", categoria: "Botanas saladas", empresa: "Bimbo", pais: "México")
@@ -79,16 +77,17 @@ struct CatalogoView: View {
 
     var body: some View {
         VStack {
-            // SearchBar
             TextField(localizer.localizedString(forKey: "catalog_search_placeholder"), text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.horizontal)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
 
-            // Filtros siempre visibles
             VStack(alignment: .leading, spacing: 8) {
                 Text(localizer.localizedString(forKey: "catalog_filter_category"))
                     .font(.subheadline)
                     .padding(.leading)
+                    
+                
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(categorias, id: \.self) { categoria in
@@ -101,6 +100,7 @@ struct CatalogoView: View {
                             }
                         }
                     }.padding(.horizontal)
+                        
                 }
 
                 Text(localizer.localizedString(forKey: "catalog_filter_company"))
@@ -123,6 +123,7 @@ struct CatalogoView: View {
                 Text(localizer.localizedString(forKey: "catalog_filter_country"))
                     .font(.subheadline)
                     .padding(.leading)
+                
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(paises, id: \.self) { pais in
@@ -134,12 +135,11 @@ struct CatalogoView: View {
                                 }
                             }
                         }
-                    }.padding(.horizontal)
+                    }.padding(.horizontal).padding(.bottom, 25)
                 }
             }
             .transition(.opacity)
 
-            // Productos agrupados por empresa
             ScrollView {
                 ForEach(empresas, id: \.self) { empresa in
                     let productosEmpresa = productosFiltrados.filter { $0.empresa == empresa }
@@ -152,10 +152,12 @@ struct CatalogoView: View {
                                             productoSeleccionado = producto
                                         }) {
                                             VStack {
+                                                
                                                 Image(producto.imagen)
                                                     .resizable()
                                                     .scaledToFit()
                                                     .frame(height: 100)
+                                                
                                                 Text(producto.nombre)
                                                     .font(.caption)
                                             }
@@ -183,7 +185,6 @@ struct CatalogoView: View {
     }
 }
 
-// Chip de filtro reutilizable
 struct FilterChip: View {
     let label: String
     let isSelected: Bool
@@ -194,21 +195,34 @@ struct FilterChip: View {
             Text(label)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
-                .background(isSelected ? Color.blue : Color.gray.opacity(0.2))
+                .background {
+                    if isSelected {
+                        LinearGradient(
+                            gradient: Gradient(colors: [
+                                Color(red: 0x12 / 255, green: 0xbe / 255, blue: 0x9e / 255),
+                                AppTheme.primary.opacity(0.6)
+                            ]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    } else {
+                        Color.gray.opacity(0.2)
+                    }
+                }
+
+                .foregroundColor(.white)
                 .foregroundColor(isSelected ? .white : .primary)
                 .cornerRadius(16)
         }
     }
 }
 
-// Extension para ProductType
 extension ProductType {
     static func fromNombre(_ nombre: String) -> ProductType? {
         ProductType.allCases.first { $0.apiValue.lowercased() == nombre.lowercased() }
     }
 }
 
-// Nueva vista para productos sin información
 struct CatalogoNoInfoView: View {
     let producto: Producto
     @ObservedObject private var localizer = LocalizationManager.shared
@@ -242,14 +256,15 @@ struct CatalogoNoInfoView: View {
                 .background(
                     LinearGradient(
                         gradient: Gradient(colors: [
-                            Color.blue.opacity(0.2),
-                            Color.blue.opacity(0.8)
+                            Color(red: 0x12 / 255, green: 0xbe / 255, blue: 0x9e / 255),
+                            AppTheme.primary.opacity(0.6)
                         ]),
-                        startPoint: .top,
-                        endPoint: .bottom
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
                     )
                     .clipShape(RoundedCorner(radius: 32, corners: [.bottomLeft, .bottomRight]))
                 )
+                .foregroundColor(.white)
 
                 InfoPanel(text: localizer.localizedString(forKey: "catalog_no_data_message"))
             }

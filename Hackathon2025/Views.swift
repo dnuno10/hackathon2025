@@ -1,7 +1,5 @@
 import SwiftUI
 
-// MARK: - UI Components
-
 struct MetricCardView: View {
     let metric: SustainabilityMetric
     @ObservedObject private var localizer = LocalizationManager.shared
@@ -62,14 +60,6 @@ struct MetricCardView: View {
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
 
-            Spacer(minLength: 10)
-
-            HStack {
-                Spacer()
-                Text("\(localizer.localizedString(forKey: "source_prefix")) \(metric.source)")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
         }
         .padding(16)
         .background(
@@ -115,14 +105,16 @@ struct HeaderView: View {
         .background(
             LinearGradient(
                 gradient: Gradient(colors: [
-                    Color.blue.opacity(0.2),
-                    Color.blue.opacity(0.8)
+                    Color(red: 0x12 / 255, green: 0xbe / 255, blue: 0x9e / 255),
+                    AppTheme.primary.opacity(0.6)
                 ]),
-                startPoint: .top,
-                endPoint: .bottom
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
             )
             .clipShape(RoundedCorner(radius: 32, corners: [.bottomLeft, .bottomRight]))
         )
+        .foregroundColor(.white)
+
     }
 }
 
