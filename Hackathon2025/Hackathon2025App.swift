@@ -11,7 +11,6 @@ import Vision
 import CoreML
 import UIKit
 
-
 final class CameraPreviewUIView: UIView {
     override class var layerClass: AnyClass {
         AVCaptureVideoPreviewLayer.self
@@ -43,24 +42,22 @@ class CameraViewModel: NSObject, ObservableObject {
         session.beginConfiguration()
         session.sessionPreset = .photo
 
-        // Camera input
-        guard let camera = AVCaptureDevice.default(.builtInWideAngleCamera,
-                                                   for: .video,
-                                                   position: .back),
+        guard let camera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
               let input = try? AVCaptureDeviceInput(device: camera),
               session.canAddInput(input) else {
-            setError("No se pudo acceder a la cámara")
+            setError(LocalizationManager.shared.localizedString(forKey: "camera_access_error"))
             session.commitConfiguration()
             return
         }
+
         session.addInput(input)
 
-        // Photo output
         guard session.canAddOutput(photoOutput) else {
-            setError("No se pudo configurar la salida de foto")
+            setError(LocalizationManager.shared.localizedString(forKey: "photo_output_error"))
             session.commitConfiguration()
             return
         }
+
         session.addOutput(photoOutput)
         session.commitConfiguration()
 
@@ -75,7 +72,7 @@ class CameraViewModel: NSObject, ObservableObject {
             let mlModel = try BimboML(configuration: config)
             productClassifier = try VNCoreMLModel(for: mlModel.model)
         } catch {
-            setError("Error al cargar el modelo: \(error.localizedDescription)")
+            setError("\(LocalizationManager.shared.localizedString(forKey: "model_loading_error")): \(error.localizedDescription)")
         }
     }
 
@@ -91,12 +88,15 @@ class CameraViewModel: NSObject, ObservableObject {
             DispatchQueue.main.async { self.isProcessingImage = false }
             return
         }
-        let request = VNCoreMLRequest(model: classifier) { [weak self] req, err in
+
+        let request = VNCoreMLRequest(model: classifier) { [weak self] req, _ in
             defer { DispatchQueue.main.async { self?.isProcessingImage = false } }
+
             guard let self = self,
                   let results = req.results as? [VNClassificationObservation],
-                  let top = results.first,
-                  top.confidence > 0.8 else { return }
+                  let top = results.first, top.confidence > 0.8 else {
+                return
+            }
 
             let id = top.identifier.lowercased()
             if let product = ProductType.allCases.first(where: { $0.apiValue.lowercased() == id }) {
@@ -107,6 +107,7 @@ class CameraViewModel: NSObject, ObservableObject {
                 }
             }
         }
+
         request.imageCropAndScaleOption = .centerCrop
         let handler = VNImageRequestHandler(cgImage: cgImage, orientation: .up, options: [:])
         DispatchQueue.global(qos: .userInitiated).async {
@@ -136,15 +137,17 @@ extension CameraViewModel: AVCapturePhotoCaptureDelegate {
                      didFinishProcessingPhoto photo: AVCapturePhoto,
                      error: Error?) {
         if let error = error {
-            setError("Error al capturar foto: \(error.localizedDescription)")
+            setError("\(LocalizationManager.shared.localizedString(forKey: "capture_error")): \(error.localizedDescription)")
             return
         }
+
         guard let data = photo.fileDataRepresentation(),
               let uiImage = UIImage(data: data),
               let cgImage = uiImage.cgImage else {
-            setError("Error al procesar la imagen capturada")
+            setError(LocalizationManager.shared.localizedString(forKey: "image_processing_error"))
             return
         }
+
         classify(cgImage)
     }
 }
@@ -157,8 +160,7 @@ struct CameraPreviewView: UIViewRepresentable {
         view.backgroundColor = .black
         view.previewLayer.session = session
         view.previewLayer.videoGravity = .resizeAspectFill
-        if let conn = view.previewLayer.connection,
-           conn.isVideoOrientationSupported {
+        if let conn = view.previewLayer.connection, conn.isVideoOrientationSupported {
             conn.videoOrientation = .portrait
         }
         return view
@@ -172,6 +174,7 @@ struct CameraPreviewView: UIViewRepresentable {
 struct CameraView: View {
     @StateObject private var vm = CameraViewModel()
     @State private var showGuide = true
+    @ObservedObject private var localizer = LocalizationManager.shared
 
     var body: some View {
         NavigationView {
@@ -187,15 +190,14 @@ struct CameraView: View {
                             Image(systemName: "camera")
                                 .font(.system(size: 60))
                                 .foregroundColor(.white)
-                            Text("Presiona para tomar foto")
+                            Text(localizer.localizedString(forKey: "camera_guide"))
                                 .font(.headline)
                                 .foregroundColor(.white)
-                                .padding(.horizontal)
-                                .padding(.vertical)
-                                .background(Color.black.opacity(0.6))
+                                .padding()
+                                .background(Color.black.opacity(0.35))
                                 .cornerRadius(16)
                         }
-                        .padding(.bottom, 120)
+                        .padding(.bottom, 70)
                     }
 
                     Button(action: {
@@ -203,12 +205,8 @@ struct CameraView: View {
                         vm.capturePhoto()
                     }) {
                         ZStack {
-                            Circle()
-                                .fill(Color.white)
-                                .frame(width: 70, height: 70)
-                            Circle()
-                                .stroke(Color.white, lineWidth: 2)
-                                .frame(width: 85, height: 85)
+                            Circle().fill(Color.white).frame(width: 70, height: 70)
+                            Circle().stroke(Color.white, lineWidth: 2).frame(width: 85, height: 85)
                         }
                     }
                     .disabled(vm.isProcessingImage)
@@ -217,51 +215,47 @@ struct CameraView: View {
 
                 if vm.isProcessingImage {
                     Color.black.opacity(0.6).edgesIgnoringSafeArea(.all)
-                    ProgressView("Analizando…")
+                    ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .foregroundColor(.white)
                         .scaleEffect(1.5)
                 }
-
-                
-            }.sheet(isPresented: $vm.showProductView, onDismiss: {
+            }
+            .sheet(isPresented: $vm.showProductView, onDismiss: {
                 vm.resumeSession()
             }) {
                 if let product = vm.detectedProduct {
                     BimboSustainabilityMetricsView(product: product)
                 }
             }
-
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Text("Captura Producto")
+                    Text(localizer.localizedString(forKey: "camera_title"))
                         .foregroundColor(.white)
-                        .font(.headline)
+                        .font(.system(size: 23, weight: .semibold))
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    HStack(spacing: 16) {
-                        NavigationLink(destination: CatalogoView()) {
-                            Image(systemName: "info.circle.fill")
+                    HStack(spacing: 7) {
+                        NavigationLink(destination: CatalogoView().toolbarRole(.editor)
+) {
+                            Image(systemName: "magnifyingglass.circle.fill")
+                                .font(.system(size: 25))
                                 .foregroundColor(.white)
                         }
-
-                        NavigationLink(destination: MyProfileView()) {
+                        NavigationLink(destination: MyProfileView().toolbarRole(.editor)
+) {
                             Image(systemName: "person.circle.fill")
+                                .font(.system(size: 25))
                                 .foregroundColor(.white)
                         }
                     }
                 }
             }
-
-            
-            
-
             .alert(isPresented: $vm.showError) {
                 Alert(
                     title: Text("Error"),
-                    message: Text(vm.errorMessage ?? "Error desconocido"),
-                    dismissButton: .default(Text("OK")) {
+                    message: Text(vm.errorMessage ?? localizer.localizedString(forKey: "unknown_error")),
+                    dismissButton: .default(Text(localizer.localizedString(forKey: "ok_button"))) {
                         vm.resumeSession()
                     }
                 )
@@ -274,7 +268,7 @@ struct CameraView: View {
 struct Hackathon2025App: App {
     var body: some Scene {
         WindowGroup {
-            CameraView()
+            WelcomeView()
         }
     }
 }

@@ -1,0 +1,119 @@
+/* 
+  Localizable.strings
+  Hackathon2025
+
+  Created by Daniel Nuno on 5/13/25.
+  
+*/
+
+"app_title" = "EcoBimbo";
+"welcome_slogan" = "Escanea. Descubre. Impacta.";
+"badge_info" = "Gana insignias al escanear productos";
+"start_button" = "Comenzar";
+"sustainability_title" = "Indicadores de Sustentabilidad";
+"info_intro" = "Los siguientes indicadores muestran el desempeño sustentable del producto. Cada métrica incluye una equivalencia cotidiana para mejor comprensión.";
+"info_no_data" = "No hay datos disponibles para este producto en este momento.";
+"info_source" = "Datos extraídos del Informe Anual 2023 de Grupo Bimbo y comunicados oficiales. Para más información, visita grupobimbo.com";
+"loading_message" = "Cargando datos de sustentabilidad...";
+"error_generic" = "Ocurrió un error al cargar los datos.";
+"source_prefix" = "Fuente:";
+"error_no_metrics" = "No se pudieron obtener métricas para este producto.";
+"error_loading_data" = "Error al cargar datos: %@";
+
+"eq_gansito_energy" = "Equivale a alimentar 1,000 hogares por un día";
+"eq_gansito_packaging" = "Equivale a salvar 60 árboles por tonelada";
+"eq_gansito_water" = "Ahorro de 15,000 litros diarios";
+"eq_gansito_carbon" = "Equivale a un viaje de 1 km en auto";
+
+"eq_mantecadas_energy" = "Equivale a alimentar 1,200 hogares por un día";
+"eq_mantecadas_packaging" = "Equivale a salvar 55 árboles por tonelada";
+"eq_mantecadas_water" = "Ahorro de 16,000 litros diarios";
+"eq_mantecadas_carbon" = "Equivale a un viaje de 1.2 km en auto";
+
+"eq_takis_energy" = "Equivale a plantar 500 árboles al año";
+"eq_takis_packaging" = "Reducción de 30 toneladas de plástico";
+"eq_takis_water" = "Equivale a llenar 11,000 botellas de 1L por día";
+"eq_takis_carbon" = "Equivale a un viaje de 2 km en autobús";
+
+"profile_title" = "Mi Perfil";
+"profile_friends_title" = "Tus Rachas 🔥";
+"profile_badges_title" = "Tus Insignias 🎖️";
+
+"badge_streak_title" = "Racha Encendida";
+"badge_streak_desc" = "Llevas más de 3 días escaneando.";
+
+"badge_eco_title" = "Explorador Ecológico";
+"badge_eco_desc" = "Escaneaste tu primer producto ecológico.";
+
+"badge_first_title" = "Primer Logro";
+"badge_first_desc" = "Registraste tu primer producto.";
+
+"badge_healthy_title" = "Nutri Ninja";
+"badge_healthy_desc" = "Escaneaste 10 productos saludables.";
+
+"badge_packaging_title" = "Empaque Experto";
+"badge_packaging_desc" = "Identificaste 5 productos con empaque reciclable.";
+
+"badge_water_title" = "Hidratado";
+"badge_water_desc" = "Escaneaste 3 bebidas saludables.";
+
+"badge_planet_title" = "Amigo del Planeta";
+"badge_planet_desc" = "Escaneaste 10 productos ecológicos.";
+
+"badge_speed_title" = "Velocidad Máxima";
+"badge_speed_desc" = "Escaneaste 5 productos en menos de un minuto.";
+
+"badge_goal_title" = "Meta Alcanzada";
+"badge_goal_desc" = "Completaste tu primera meta semanal.";
+
+"desc_energía_renovable" = "Electricidad renovable usada en la producción";
+"desc_embalaje_reciclable" = "Material reciclable/compostable en el empaque";
+"desc_reuso_agua" = "Agua reutilizada respecto a 2020";
+"desc_huella_carbono" = "Emisiones por unidad (del origen al punto de venta)";
+"desc_impacto_social" = "Personas beneficiadas por programas vinculados a la marca";
+
+"muy_malo" = "Muy malo";
+"malo" = "Malo";
+"regular" = "Regular";
+"bueno" = "Bueno";
+"muy_bueno" = "Muy bueno";
+
+"category_bolleria" = "Bollería Indulgente";
+"category_botanas" = "Botanas Picantes";
+
+"history_title" = "Historial";
+"alert_title" = "¡Sigue explorando!";
+"alert_not_scanned_message" = "¡Aún no has escaneado este producto! Sigue registrando tus compras para descubrir más información";
+"alert_button" = "OK";
+"alert_no_data" = "No hay datos de sustentabilidad disponibles para este producto.";
+
+"product_gansito" = "Gansito";
+"product_barritas_fresa" = "Barritas Fresa";
+"product_canelitas" = "Canelitas";
+"product_donas_bimbo" = "Donas Bimbo";
+"product_mantecadas" = "Mantecadas";
+"product_nito" = "Nito";
+"product_pan_bimbo" = "Pan Bimbo";
+"product_takis" = "Takis";
+"product_rebanadas_bimbo" = "Rebanadas Bimbo";
+"product_tortillinas" = "Tortillinas";
+
+"camera_title" = "Captura Producto";
+"camera_guide" = "Presiona para tomar foto";
+"camera_access_error" = "No se pudo acceder a la cámara";
+"photo_output_error" = "No se pudo configurar la salida de foto";
+"model_loading_error" = "Error al cargar el modelo";
+"capture_error" = "Error al capturar foto";
+"image_processing_error" = "Error al procesar la imagen capturada";
+"unknown_error" = "Error desconocido";
+"ok_button" = "OK";
+
+"language" = "Español";
+
+"catalog_title" = "Catálogo BIMBO";
+"catalog_search_placeholder" = "Buscar producto, empresa o país...";
+"catalog_filter_category" = "Categorías";
+"catalog_filter_company" = "Empresas";
+"catalog_filter_country" = "Países";
+"catalog_no_data_title" = "Indicadores de Sustentabilidad";
+"catalog_no_data_message" = "No hay datos disponibles para este producto en este momento.";

@@ -1,17 +1,11 @@
-//
-//  Views.swift
-//  Hackathon2025
-//
-//  Created by Daniel Nuno on 5/13/25.
-//
-
 import SwiftUI
 
 // MARK: - UI Components
 
 struct MetricCardView: View {
     let metric: SustainabilityMetric
-    
+    @ObservedObject private var localizer = LocalizationManager.shared
+
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack {
@@ -21,37 +15,37 @@ struct MetricCardView: View {
                     .frame(width: 70, height: 70)
                     .background(metric.category.color.opacity(0.15))
                     .clipShape(Circle())
-                
-                Text(metric.indicatorCode.description)
+
+                Text(localizer.localizedString(forKey: "desc_\(metric.indicatorCode.rawValue.lowercased())"))
                     .font(.headline)
                     .fontWeight(.semibold)
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
-                
+
                 Spacer()
-                
+
                 Text(metric.isPositiveIndicator ? "↑" : "↓")
                     .font(.title3)
                     .foregroundColor(metric.category.color)
                     .fontWeight(.black)
             }
-            
+
             Divider()
                 .background(Color(UIColor.systemGray4))
-            
+
             HStack(alignment: .firstTextBaseline) {
                 Text("\(Int(metric.numericValue))")
                     .font(.system(size: 44, weight: .bold, design: .rounded))
                     .foregroundColor(metric.category.color)
-                
+
                 Text(metric.indicatorCode.unit)
                     .font(.headline)
                     .foregroundColor(.secondary)
                     .padding(.leading, 2)
-                
+
                 Spacer()
-                
-                Text(metric.category.rawValue)
+
+                Text(localizer.localizedString(forKey: metric.category.rawValue.lowercased().replacingOccurrences(of: " ", with: "_")))
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .padding(.horizontal, 12)
@@ -60,19 +54,19 @@ struct MetricCardView: View {
                     .foregroundColor(metric.category.color)
                     .clipShape(Capsule())
             }
-            
+
             Text(metric.dailyEquivalent)
                 .font(.subheadline)
                 .foregroundColor(Color(UIColor.darkGray))
                 .padding(.top, 4)
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
-            
+
             Spacer(minLength: 10)
-            
+
             HStack {
                 Spacer()
-                Text("Fuente: \(metric.source)")
+                Text("\(localizer.localizedString(forKey: "source_prefix")) \(metric.source)")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -90,7 +84,8 @@ struct MetricCardView: View {
 
 struct HeaderView: View {
     let product: ProductType
-    
+    @ObservedObject private var localizer = LocalizationManager.shared
+
     var body: some View {
         VStack(spacing: 20) {
             Image(product.image)
@@ -98,13 +93,13 @@ struct HeaderView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 240)
                 .padding(.top, 20)
-            
+
             VStack(spacing: 10) {
-                Text(product.rawValue)
+                Text(localizer.localizedString(forKey: "product_\(product.rawValue.lowercased().replacingOccurrences(of: " ", with: "_") )"))
                     .font(.system(size: 32, weight: .bold))
                     .foregroundColor(.white)
-                
-                Text(product.category)
+
+                Text(localizer.localizedString(forKey: "\(product.categoryKey.lowercased().components(separatedBy: " ")[0])"))
                     .font(.headline)
                     .foregroundColor(.white)
                     .padding(.horizontal, 20)
@@ -128,13 +123,13 @@ struct HeaderView: View {
             )
             .clipShape(RoundedCorner(radius: 32, corners: [.bottomLeft, .bottomRight]))
         )
-
     }
 }
+
 struct RoundedCorner: Shape {
     var radius: CGFloat = .infinity
     var corners: UIRectCorner = .allCorners
-    
+
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(
             roundedRect: rect,
@@ -145,11 +140,9 @@ struct RoundedCorner: Shape {
     }
 }
 
-
-
 struct InfoPanel: View {
     let text: String
-    
+
     var body: some View {
         Text(text)
             .font(.footnote)
@@ -165,12 +158,14 @@ struct InfoPanel: View {
 }
 
 struct LoadingView: View {
+    @ObservedObject private var localizer = LocalizationManager.shared
+
     var body: some View {
         VStack(spacing: 20) {
             ProgressView()
                 .scaleEffect(1.5)
-            
-            Text("Cargando datos de sustentabilidad...")
+
+            Text(localizer.localizedString(forKey: "loading_message"))
                 .font(.headline)
                 .foregroundColor(.secondary)
         }
@@ -186,13 +181,13 @@ struct LoadingView: View {
 
 struct ErrorView: View {
     let message: String
-    
+
     var body: some View {
         VStack(spacing: 20) {
             Image(systemName: "exclamationmark.triangle")
                 .font(.system(size: 40))
                 .foregroundColor(.orange)
-            
+
             Text(message)
                 .font(.headline)
                 .foregroundColor(.secondary)
@@ -208,38 +203,36 @@ struct ErrorView: View {
     }
 }
 
-// MARK: - Main View
-
 struct BimboSustainabilityMetricsView: View {
     @StateObject private var viewModel: SustainabilityViewModel
-    
+    @ObservedObject private var localizer = LocalizationManager.shared
+
     init(product: ProductType = .gansito) {
         _viewModel = StateObject(wrappedValue: SustainabilityViewModel(product: product))
     }
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
                 HeaderView(product: viewModel.product)
-                
-                InfoPanel(text: "Los siguientes indicadores muestran el desempeño sustentable del producto. Cada métrica incluye una equivalencia cotidiana para mejor comprensión.")
-                
+
+                InfoPanel(text: localizer.localizedString(forKey: "info_intro"))
+
                 if viewModel.isLoading {
                     LoadingView()
                 } else if let errorMessage = viewModel.errorMessage {
                     ErrorView(message: errorMessage)
                 } else if viewModel.metrics.isEmpty {
-                    InfoPanel(text: "No hay datos disponibles para este producto en este momento.")
+                    InfoPanel(text: localizer.localizedString(forKey: "info_no_data"))
                 } else {
-                    // Metric cards
                     LazyVStack(spacing: 16) {
                         ForEach(viewModel.metrics) { metric in
                             MetricCardView(metric: metric)
                         }
                     }
                 }
-                
-                InfoPanel(text: "Datos extraídos del Annual Report 2023 de Grupo Bimbo y comunicados oficiales. Para más información visite grupobimbo.com")
+
+                InfoPanel(text: localizer.localizedString(forKey: "info_source"))
             }
             .padding(.bottom, 24)
         }
@@ -251,23 +244,21 @@ struct BimboSustainabilityMetricsView: View {
             )
             .ignoresSafeArea()
         )
-        .navigationTitle("Indicadores de Sustentabilidad")
+        .navigationTitle(localizer.localizedString(forKey: "sustainability_title"))
         .navigationBarTitleDisplayMode(.inline)
     }
 }
-
-// MARK: - Preview
 
 struct BimboSustainabilityMetricsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             BimboSustainabilityMetricsView(product: .gansito)
         }
-        
+
         NavigationView {
             BimboSustainabilityMetricsView(product: .mantecadas)
         }
-        
+
         NavigationView {
             BimboSustainabilityMetricsView(product: .takis)
         }

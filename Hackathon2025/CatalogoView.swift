@@ -24,6 +24,7 @@ struct CatalogoView: View {
     @State private var selectedEmpresas: Set<String> = []
     @State private var selectedPaises: Set<String> = []
     @State private var productoSeleccionado: Producto? = nil
+    @ObservedObject private var localizer = LocalizationManager.shared
 
     // Ejemplo de productos
     let productos: [Producto] = [
@@ -79,13 +80,13 @@ struct CatalogoView: View {
     var body: some View {
         VStack {
             // SearchBar
-            TextField("Buscar producto, empresa o país...", text: $searchText)
+            TextField(localizer.localizedString(forKey: "catalog_search_placeholder"), text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal)
 
             // Filtros siempre visibles
             VStack(alignment: .leading, spacing: 8) {
-                Text("Categorías")
+                Text(localizer.localizedString(forKey: "catalog_filter_category"))
                     .font(.subheadline)
                     .padding(.leading)
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -102,7 +103,7 @@ struct CatalogoView: View {
                     }.padding(.horizontal)
                 }
 
-                Text("Empresas")
+                Text(localizer.localizedString(forKey: "catalog_filter_company"))
                     .font(.subheadline)
                     .padding(.leading)
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -119,7 +120,7 @@ struct CatalogoView: View {
                     }.padding(.horizontal)
                 }
 
-                Text("Países")
+                Text(localizer.localizedString(forKey: "catalog_filter_country"))
                     .font(.subheadline)
                     .padding(.leading)
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -169,7 +170,7 @@ struct CatalogoView: View {
                 }
             }
         }
-        .navigationTitle("Catálogo BIMBO")
+        .navigationTitle(localizer.localizedString(forKey: "catalog_title"))
         .sheet(item: $productoSeleccionado) { producto in
             if let productType = ProductType.fromNombre(producto.nombre) {
                 BimboSustainabilityMetricsView(product: productType)
@@ -210,7 +211,7 @@ extension ProductType {
 // Nueva vista para productos sin información
 struct CatalogoNoInfoView: View {
     let producto: Producto
-
+    @ObservedObject private var localizer = LocalizationManager.shared
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
@@ -250,7 +251,7 @@ struct CatalogoNoInfoView: View {
                     .clipShape(RoundedCorner(radius: 32, corners: [.bottomLeft, .bottomRight]))
                 )
 
-                InfoPanel(text: "No hay datos disponibles para este producto en este momento.")
+                InfoPanel(text: localizer.localizedString(forKey: "catalog_no_data_message"))
             }
             .padding(.bottom, 24)
         }
@@ -262,7 +263,7 @@ struct CatalogoNoInfoView: View {
             )
             .ignoresSafeArea()
         )
-        .navigationTitle("Indicadores de Sustentabilidad")
+        .navigationTitle(localizer.localizedString(forKey: "catalog_no_data_title"))
         .navigationBarTitleDisplayMode(.inline)
     }
 }

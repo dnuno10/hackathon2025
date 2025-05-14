@@ -1,10 +1,3 @@
-//
-//  Models.swift
-//  Hackathon2025
-//
-//  Created by Daniel Nuno on 5/13/25.
-//
-
 import Foundation
 import SwiftUI
 
@@ -29,20 +22,9 @@ enum IndicatorCode: String, CaseIterable {
     case reusoAgua = "REUSO_AGUA"
     case huellaCarbono = "HUELLA_CARBONO"
     case impactoSocial = "IMPACTO_SOCIAL"
-    
-    var description: String {
-        switch self {
-        case .energiaRenovable:
-            return "% de electricidad renovable usada en la fabricación"
-        case .embalajeReciclable:
-            return "% de material reciclable/compostable en el empaque"
-        case .reusoAgua:
-            return "% de agua reutilizada vs 2020"
-        case .huellaCarbono:
-            return "Emisiones por unidad (cradle-to-gate)"
-        case .impactoSocial:
-            return "Personas beneficiadas por programas ligados a la marca"
-        }
+
+    var descriptionKey: String {
+        return "desc_\(rawValue.lowercased())"
     }
     
     var unit: String {
@@ -76,7 +58,7 @@ enum IndicatorCode: String, CaseIterable {
     }
 }
 
-enum Category: String {
+enum Category: String, CaseIterable {
     case muyMalo = "Muy malo"
     case malo = "Malo"
     case regular = "Regular"
@@ -86,26 +68,26 @@ enum Category: String {
     var color: Color {
         switch self {
         case .muyMalo:
-            return Color.red
+            return .red
         case .malo:
-            return Color.orange
+            return .orange
         case .regular:
-            return Color.yellow
+            return .yellow
         case .bueno:
-            return Color.green
+            return .green
         case .muyBueno:
-            return Color.mint
+            return .mint
         }
+    }
+
+    var localizedKey: String {
+        return rawValue.lowercased().replacingOccurrences(of: " ", with: "_")
     }
     
     static func fromString(_ categoryString: String) -> Category? {
-        switch categoryString.lowercased() {
-        case "muy malo": return .muyMalo
-        case "malo": return .malo
-        case "regular": return .regular
-        case "bueno": return .bueno
-        case "muy bueno": return .muyBueno
-        default: return nil
+        let normalized = categoryString.lowercased()
+        return Category.allCases.first {
+            $0.rawValue.lowercased() == normalized
         }
     }
 }
@@ -119,13 +101,17 @@ enum ProductType: String, CaseIterable {
         return rawValue.lowercased()
     }
     
-    var category: String {
+    var categoryKey: String {
         switch self {
         case .gansito, .mantecadas:
-            return "Bollería Indulgente"
+            return "category_bolleria"
         case .takis:
-            return "Botanas Picantes"
+            return "category_botanas"
         }
+    }
+
+    var localizedKey: String {
+        return "product_\(rawValue.lowercased().replacingOccurrences(of: " ", with: "_"))"
     }
     
     var apiValue: String {
@@ -133,9 +119,7 @@ enum ProductType: String, CaseIterable {
         case .mantecadas:
             return "Mantecadas"
         default:
-            return self.rawValue
+            return rawValue
         }
     }
 }
-
-

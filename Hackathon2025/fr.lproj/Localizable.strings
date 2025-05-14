@@ -1,0 +1,120 @@
+/* 
+  Localizable.strings
+  Hackathon2025
+
+  Created by Daniel Nuno on 5/13/25.
+  
+*/
+
+
+"app_title" = "EcoBimbo";
+"welcome_slogan" = "Scannez. Découvrez. Impactez.";
+"badge_info" = "Gagnez des badges en scannant des produits";
+"start_button" = "Commencer";
+"sustainability_title" = "Indicateurs de durabilité";
+"info_intro" = "Les indicateurs suivants montrent la performance de durabilité du produit. Chaque métrique comprend une équivalence quotidienne pour une meilleure compréhension.";
+"info_no_data" = "Aucune donnée disponible pour ce produit pour le moment.";
+"info_source" = "Données extraites du Rapport Annuel 2023 de Grupo Bimbo et de communiqués officiels. Pour plus d'informations, visitez grupobimbo.com";
+"loading_message" = "Chargement des données de durabilité...";
+"error_generic" = "Une erreur s’est produite lors du chargement des données.";
+"source_prefix" = "Source :";
+"error_no_metrics" = "Impossible de récupérer les métriques pour ce produit.";
+"error_loading_data" = "Erreur lors du chargement des données : %@";
+
+"eq_gansito_energy" = "Équivaut à alimenter 1 000 foyers pendant une journée";
+"eq_gansito_packaging" = "Équivaut à sauver 60 arbres par tonne";
+"eq_gansito_water" = "Économie de 15 000 litres par jour";
+"eq_gansito_carbon" = "Équivaut à un trajet de 1 km en voiture";
+
+"eq_mantecadas_energy" = "Équivaut à alimenter 1 200 foyers pendant une journée";
+"eq_mantecadas_packaging" = "Équivaut à sauver 55 arbres par tonne";
+"eq_mantecadas_water" = "Économie de 16 000 litres par jour";
+"eq_mantecadas_carbon" = "Équivaut à un trajet de 1,2 km en voiture";
+
+"eq_takis_energy" = "Équivaut à planter 500 arbres par an";
+"eq_takis_packaging" = "Réduction de 30 tonnes de plastique";
+"eq_takis_water" = "Équivaut à remplir 11 000 bouteilles de 1L par jour";
+"eq_takis_carbon" = "Équivaut à un trajet de 2 km en bus";
+
+"profile_title" = "Mon Profil";
+"profile_friends_title" = "Tes Séries 🔥";
+"profile_badges_title" = "Tes Badges 🎖️";
+
+"badge_streak_title" = "Série Active";
+"badge_streak_desc" = "Tu as scanné pendant plus de 3 jours.";
+
+"badge_eco_title" = "Explorateur Écolo";
+"badge_eco_desc" = "Tu as scanné ton premier produit écologique.";
+
+"badge_first_title" = "Première Réussite";
+"badge_first_desc" = "Tu as enregistré ton premier produit.";
+
+"badge_healthy_title" = "Nutri Ninja";
+"badge_healthy_desc" = "Tu as scanné 10 produits sains.";
+
+"badge_packaging_title" = "Expert Emballage";
+"badge_packaging_desc" = "Tu as identifié 5 produits recyclables.";
+
+"badge_water_title" = "Hydraté";
+"badge_water_desc" = "Tu as scanné 3 boissons saines.";
+
+"badge_planet_title" = "Ami de la Planète";
+"badge_planet_desc" = "Tu as scanné 10 produits écologiques.";
+
+"badge_speed_title" = "Ultra Rapide";
+"badge_speed_desc" = "Tu as scanné 5 produits en moins d'une minute.";
+
+"badge_goal_title" = "Objectif Atteint";
+"badge_goal_desc" = "Tu as complété ton premier objectif hebdomadaire.";
+
+"desc_energía_renovable" = "Électricité renouvelable utilisée dans la production";
+"desc_embalaje_reciclable" = "Matériau recyclable/compostable dans l'emballage";
+"desc_reuso_agua" = "Eau réutilisée par rapport à 2020";
+"desc_huella_carbono" = "Émissions par unité (du berceau à la porte)";
+"desc_impacto_social" = "Personnes bénéficiant des programmes liés à la marque";
+
+"muy_malo" = "Très mauvais";
+"malo" = "Mauvais";
+"regular" = "Moyen";
+"bueno" = "Bon";
+"muy_bueno" = "Très bon";
+
+"category_bolleria" = "Pâtisseries gourmandes";
+"category_botanas" = "Snacks épicés";
+
+"history_title" = "Historique";
+"alert_title" = "Continuez à explorer !";
+"alert_not_scanned_message" = "Vous n'avez pas encore scanné ce produit ! Continuez à enregistrer vos achats pour découvrir plus d'informations";
+"alert_button" = "OK";
+"alert_no_data" = "Aucune donnée de durabilité pour ce produit.";
+
+"product_gansito" = "Gansito";
+"product_barritas_fresa" = "Barres à la fraise";
+"product_canelitas" = "Biscuits à la cannelle";
+"product_donas_bimbo" = "Donuts Bimbo";
+"product_mantecadas" = "Mantecadas";
+"product_nito" = "Nito";
+"product_pan_bimbo" = "Pain Bimbo";
+"product_takis" = "Takis";
+"product_rebanadas_bimbo" = "Tranches Bimbo";
+"product_tortillinas" = "Tortillinas";
+
+"camera_title" = "Capturer le produit";
+"camera_guide" = "Appuyez pour prendre une photo";
+"camera_access_error" = "Impossible d'accéder à la caméra";
+"photo_output_error" = "Échec de la configuration de la sortie photo";
+"model_loading_error" = "Erreur lors du chargement du modèle";
+"capture_error" = "Erreur de capture de photo";
+"image_processing_error" = "Erreur lors du traitement de l'image";
+"unknown_error" = "Erreur inconnue";
+"ok_button" = "OK";
+
+"language" = "Français";
+
+"catalog_title" = "Catalogue BIMBO";
+"catalog_search_placeholder" = "Rechercher un produit, une entreprise ou un pays...";
+"catalog_filter_category" = "Catégories";
+"catalog_filter_company" = "Entreprises";
+"catalog_filter_country" = "Pays";
+"catalog_no_data_title" = "Indicateurs de durabilité";
+"catalog_no_data_message" = "Aucune donnée de durabilité disponible pour ce produit pour le moment.";

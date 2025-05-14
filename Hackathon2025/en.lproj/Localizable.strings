@@ -1,0 +1,120 @@
+/* 
+  Localizable.strings
+  Hackathon2025
+
+  Created by Daniel Nuno on 5/13/25.
+  
+*/
+
+
+"app_title" = "EcoBimbo";
+"welcome_slogan" = "Scan. Discover. Impact.";
+"badge_info" = "Earn badges by scanning products";
+"start_button" = "Get Started";
+"sustainability_title" = "Sustainability Indicators";
+"info_intro" = "The following indicators show the product’s sustainability performance. Each metric includes a daily-life equivalence for better understanding.";
+"info_no_data" = "No data available for this product at this moment.";
+"info_source" = "Data extracted from Grupo Bimbo’s 2023 Annual Report and official statements. For more information, visit grupobimbo.com";
+"loading_message" = "Loading sustainability data...";
+"error_generic" = "An error occurred while loading the data.";
+"source_prefix" = "Source:";
+"error_no_metrics" = "Could not retrieve metrics for this product.";
+"error_loading_data" = "Error loading data: %@";
+
+"eq_gansito_energy" = "Equivalent to powering 1,000 homes for one day";
+"eq_gansito_packaging" = "Equals saving 60 trees per ton";
+"eq_gansito_water" = "Savings of 15,000 liters daily";
+"eq_gansito_carbon" = "Equivalent to a 1 km car trip";
+
+"eq_mantecadas_energy" = "Equivalent to powering 1,200 homes for one day";
+"eq_mantecadas_packaging" = "Equals saving 55 trees per ton";
+"eq_mantecadas_water" = "Savings of 16,000 liters daily";
+"eq_mantecadas_carbon" = "Equivalent to a 1.2 km car trip";
+
+"eq_takis_energy" = "Equivalent to planting 500 trees annually";
+"eq_takis_packaging" = "Reduction of 30 tons of plastic";
+"eq_takis_water" = "Equivalent to filling 11,000 1L bottles daily";
+"eq_takis_carbon" = "Equivalent to a 2 km bus ride";
+
+"profile_title" = "My Profile";
+"profile_friends_title" = "Your Streaks 🔥";
+"profile_badges_title" = "Your Badges 🎖️";
+
+"badge_streak_title" = "Hot Streak";
+"badge_streak_desc" = "You've scanned for more than 3 days.";
+
+"badge_eco_title" = "Eco Explorer";
+"badge_eco_desc" = "You scanned your first eco-friendly product.";
+
+"badge_first_title" = "First Achievement";
+"badge_first_desc" = "You registered your first product.";
+
+"badge_healthy_title" = "Nutri Ninja";
+"badge_healthy_desc" = "You scanned 10 healthy products.";
+
+"badge_packaging_title" = "Packaging Pro";
+"badge_packaging_desc" = "Identified 5 recyclable packaging products.";
+
+"badge_water_title" = "Hydrated";
+"badge_water_desc" = "Scanned 3 healthy beverages.";
+
+"badge_planet_title" = "Planet Friend";
+"badge_planet_desc" = "Scanned 10 eco-friendly products.";
+
+"badge_speed_title" = "Speed Runner";
+"badge_speed_desc" = "Scanned 5 products in under a minute.";
+
+"badge_goal_title" = "Goal Achieved";
+"badge_goal_desc" = "Completed your first weekly goal.";
+
+"desc_energía_renovable" = "Renewable electricity used in production";
+"desc_embalaje_reciclable" = "Recyclable/compostable material in packaging";
+"desc_reuso_agua" = "Water reused vs 2020";
+"desc_huella_carbono" = "Emissions per unit (cradle-to-gate)";
+"desc_impacto_social" = "People benefited by brand-linked programs";
+
+"muy_malo" = "Very bad";
+"malo" = "Bad";
+"regular" = "Fair";
+"bueno" = "Good";
+"muy_bueno" = "Very good";
+
+"category_bolleria" = "Indulgent Pastries";
+"category_botanas" = "Spicy Snacks";
+
+"history_title" = "History";
+"alert_title" = "Keep exploring!";
+"alert_not_scanned_message" = "You haven't scanned this product yet! Keep logging your purchases to unlock more insights";
+"alert_button" = "OK";
+"alert_no_data" = "No sustainability data available for this product.";
+
+"product_gansito" = "Gansito";
+"product_barritas_fresa" = "Strawberry Bars";
+"product_canelitas" = "Cinnamon Cookies";
+"product_donas_bimbo" = "Bimbo Donuts";
+"product_mantecadas" = "Mantecadas";
+"product_nito" = "Nito";
+"product_pan_bimbo" = "Bimbo Bread";
+"product_takis" = "Takis";
+"product_rebanadas_bimbo" = "Bimbo Slices";
+"product_tortillinas" = "Tortillinas";
+
+"camera_title" = "Capture Product";
+"camera_guide" = "Tap to take photo";
+"camera_access_error" = "Unable to access the camera";
+"photo_output_error" = "Failed to configure photo output";
+"model_loading_error" = "Error loading the model";
+"capture_error" = "Photo capture error";
+"image_processing_error" = "Image processing failed";
+"unknown_error" = "Unknown error";
+"ok_button" = "OK";
+
+"language" = "English";
+
+"catalog_title" = "BIMBO Catalog";
+"catalog_search_placeholder" = "Search product, company or country...";
+"catalog_filter_category" = "Categories";
+"catalog_filter_company" = "Companies";
+"catalog_filter_country" = "Countries";
+"catalog_no_data_title" = "Sustainability Indicators";
+"catalog_no_data_message" = "No sustainability data available for this product at this moment.";
